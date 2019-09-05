@@ -3,7 +3,7 @@ package devlight.io.sample;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.graphics.ColorUtils;
+import androidx.core.graphics.ColorUtils;
 import android.widget.Toast;
 
 import devlight.io.library.ntb.NavigationTabBar;

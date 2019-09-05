@@ -38,10 +38,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.ViewCompat;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
+import androidx.viewpager.widget.ViewPager;
+
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -153,6 +155,8 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
     protected boolean mNeedHide;
     // Detect if need animate animate or force hide
     protected boolean mAnimateHide;
+
+    protected boolean mViewPagerHasAnimation = true;
 
     // Main paint
     protected final Paint mPaint = new Paint(FLAGS) {
@@ -313,6 +317,8 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
         final TypedArray typedArray =
                 context.obtainStyledAttributes(attrs, R.styleable.NavigationTabBar);
         try {
+            setViewPagerHasAnimation(typedArray.getBoolean(R.styleable.NavigationTabBar_ntb_view_pager_animation, true));
+
             setIsTitled(typedArray.getBoolean(R.styleable.NavigationTabBar_ntb_titled, false));
             setIsBadged(typedArray.getBoolean(R.styleable.NavigationTabBar_ntb_badged, false));
             setIsScaled(typedArray.getBoolean(R.styleable.NavigationTabBar_ntb_scaled, true));
@@ -457,6 +463,10 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
         mModels.addAll(models);
         requestLayout();
     }
+
+    public boolean isViewPagerHasAnimation() { return mViewPagerHasAnimation; }
+
+    public void setViewPagerHasAnimation(boolean hasAnimation) { mViewPagerHasAnimation = hasAnimation; }
 
     public boolean isTitled() {
         return mIsTitled;
@@ -772,7 +782,7 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
         setViewPager(viewPager);
 
         mIndex = index;
-        if (mIsViewPagerMode) mViewPager.setCurrentItem(index, true);
+        if (mIsViewPagerMode) mViewPager.setCurrentItem(index, mViewPagerHasAnimation);
         postInvalidate();
     }
 
@@ -845,7 +855,7 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
         mIsSetIndexFromTabBar = true;
         if (mIsViewPagerMode) {
             if (mViewPager == null) throw new IllegalStateException("ViewPager is null.");
-            mViewPager.setCurrentItem(index, !force);
+            mViewPager.setCurrentItem(index, !force && isViewPagerHasAnimation());
         }
 
         // Set startX and endX for animation,
@@ -934,9 +944,9 @@ public class NavigationTabBar extends View implements ViewPager.OnPageChangeList
                 // If pointer touched, so move
                 if (mIsPointerActionDown) {
                     if (mIsHorizontalOrientation)
-                        mViewPager.setCurrentItem((int) (event.getX() / mModelSize), true);
+                        mViewPager.setCurrentItem((int) (event.getX() / mModelSize), mViewPagerHasAnimation);
                     else
-                        mViewPager.setCurrentItem((int) (event.getY() / mModelSize), true);
+                        mViewPager.setCurrentItem((int) (event.getY() / mModelSize), mViewPagerHasAnimation);
                     break;
                 }
                 if (mIsActionDown) break;

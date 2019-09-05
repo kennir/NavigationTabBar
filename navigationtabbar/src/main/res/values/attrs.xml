@@ -38,6 +38,7 @@
         <attr name="ntb_bg_color" format="color"/>
 
         <attr name="ntb_preview_colors" format="reference"/>
+        <attr name="ntb_view_pager_animation" fromat="boolean"/>
     </declare-styleable>
 
 </resources>

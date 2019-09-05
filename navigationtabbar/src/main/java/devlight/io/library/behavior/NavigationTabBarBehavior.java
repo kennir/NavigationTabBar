@@ -3,16 +3,19 @@ package devlight.io.library.behavior;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Build;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorCompat;
+import androidx.core.view.ViewPropertyAnimatorUpdateListener;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import devlight.io.library.ntb.NavigationTabBar;
 
